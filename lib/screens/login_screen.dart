@@ -195,6 +195,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'home_screen.dart';
 import '../services/auth_service.dart'; // auth_service.dart 파일 import
 import '../services/storage_service.dart';
+import 'signup_screen.dart';
 
 void main() {
   runApp(const ArtChatApp());
@@ -254,24 +255,25 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   // 회원가입 버튼을 눌렀을 때 호출되는 함수
-  void _handleRegister() async {
-    final name = _idController.text;
-    final password = _passwordController.text;
-    final success = await AuthService.register(name, password);
-    if (success) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('회원가입 성공. 로그인 해주세요.')),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('회원가입 실패. 다시 시도해주세요.')),
-      );
-    }
-  }
+  // void _handleRegister() async {
+  //   final name = _idController.text;
+  //   final password = _passwordController.text;
+  //   final success = await AuthService.register(name, password);
+  //   if (success) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text('회원가입 성공. 로그인 해주세요.')),
+  //     );
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text('회원가입 실패. 다시 시도해주세요.')),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false, // 키보드가 올라올 때 화면 밀림 방지
       backgroundColor: const Color(0xFFF3F4F6),
       body: SafeArea(
         child: Center(
@@ -315,7 +317,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     Colors.white,
                     const Color(0xFF1E40AF),
                     border: true,
-                    onTap: _handleRegister,
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SignupScreen())
+                      );
+                    },
                   ),
                   const SizedBox(height: 20),
                   const Text(
